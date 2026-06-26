@@ -1,21 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://example.com/</loc>
+    <loc>https://filetiny.com/</loc>
   </url>
   <url>
-    <loc>https://example.com/zh.html</loc>
+    <loc>https://filetiny.com/zh.html</loc>
   </url>
   <url>
-    <loc>https://example.com/about.html</loc>
+    <loc>https://filetiny.com/about.html</loc>
   </url>
   <url>
-    <loc>https://example.com/zh-about.html</loc>
+    <loc>https://filetiny.com/zh-about.html</loc>
   </url>
   <url>
-    <loc>https://example.com/privacy.html</loc>
+    <loc>https://filetiny.com/privacy.html</loc>
   </url>
   <url>
-    <loc>https://example.com/zh-privacy.html</loc>
+    <loc>https://filetiny.com/zh-privacy.html</loc>
   </url>
 </urlset>
+

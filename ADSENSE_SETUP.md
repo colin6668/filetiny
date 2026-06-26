@@ -1,4 +1,4 @@
-# Google AdSense Setup
+﻿# Google AdSense Setup
 
 This site is ready for AdSense, but real ads are disabled by default.
 
@@ -48,4 +48,5 @@ Replace `pub-0000000000000000` with the numeric part of your own `ca-pub-...` id
 - Do not click your own ads.
 - Do not enable live ads before the site has useful content and policy pages.
 - Keep `about.html`, `privacy.html`, `zh-about.html`, and `zh-privacy.html` published.
-- Replace `https://example.com/` in canonical links and `sitemap.xml` with the real domain before submitting to Search Console or AdSense.
+- Replace `https://filetiny.com/` in canonical links and `sitemap.xml` with the real domain before submitting to Search Console or AdSense.
+
