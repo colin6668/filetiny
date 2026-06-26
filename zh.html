@@ -10,7 +10,7 @@
   <link rel="alternate" hreflang="zh-CN" href="https://filetiny.com/zh">
   <link rel="alternate" hreflang="x-default" href="https://filetiny.com/">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8740205731170348" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="styles.css?v=20260626-ui1">
+  <link rel="stylesheet" href="styles.css?v=20260626-ui2">
 </head>
 <body>
   <header class="topbar">
@@ -19,6 +19,7 @@
       <nav>
         <a href="#image-tools">图片工具</a>
         <a href="#pdf-tools">PDF 工具</a>
+        <a href="#qr-generator">二维码生成</a>
         <a href="#word-counter">字数统计</a>
         <a href="#loan-calculator">贷款计算器</a>
       </nav>
@@ -88,12 +89,16 @@
             <strong>PDF 提取文字</strong>
             <span>从 PDF 中提取可选择文字，适合整理资料、复制合同内容和做摘要。</span>
           </a>
+          <a class="tool-card" href="#qr-generator">
+            <strong>二维码生成器</strong>
+            <span>为链接、文字、邮箱、电话和 Wi-Fi 信息生成二维码。</span>
+          </a>
         </div>
       </div>
 
       <div class="tool-group">
         <div class="tool-group-head">
-          <p class="eyebrow">文字和计算</p>
+          <p class="eyebrow">常用工具</p>
           <h2>快速检查文字和简单财务数字</h2>
         </div>
         <div class="tool-grid">
@@ -338,6 +343,41 @@
       </div>
     </section>
 
+    <section id="qr-generator" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">常用工具</p>
+          <h2>二维码生成器</h2>
+          <p>把链接、文字、邮箱、电话或 Wi-Fi 信息生成二维码，并下载为 PNG 或 SVG。</p>
+        </div>
+      </div>
+      <div class="panel qr-panel">
+        <label>二维码内容
+          <textarea id="qrInput" rows="5" placeholder="https://example.com"></textarea>
+        </label>
+        <div class="controls">
+          <label>尺寸
+            <input id="qrSize" type="number" min="128" max="1024" step="32" value="256">
+          </label>
+          <label>纠错等级
+            <select id="qrErrorLevel">
+              <option value="M">中</option>
+              <option value="L">低</option>
+              <option value="Q">高</option>
+              <option value="H">最高</option>
+            </select>
+          </label>
+          <button id="qrGenerateBtn" type="button">生成二维码</button>
+          <button id="qrDownloadPngBtn" type="button" class="secondary" disabled>下载 PNG</button>
+          <button id="qrDownloadSvgBtn" type="button" class="secondary" disabled>下载 SVG</button>
+        </div>
+        <div class="qr-output">
+          <canvas id="qrCanvas" width="256" height="256" aria-label="生成的二维码"></canvas>
+          <div id="qrResult" class="result"></div>
+        </div>
+      </div>
+    </section>
+
     <section id="word-counter" class="tool-section">
       <div class="section-head">
         <div>
@@ -388,6 +428,20 @@
       <h2>为什么做这些工具？</h2>
       <p>很多人搜索小工具时，往往是马上要完成一个具体任务：文件太大需要压缩、图片格式不对、资料照片需要转成 PDF、PDF 需要合并拆分、文章需要统计字数、贷款月供需要快速估算。这个站点先从高频、轻量、可复用的工具做起，再逐步扩展更多长尾页面。</p>
     </section>
+
+    <section class="support-block">
+      <div>
+        <p class="eyebrow">支持 FileTiny</p>
+        <h2>帮助这个小工具站持续免费。</h2>
+        <p>如果 FileTiny 帮你节省了时间，可以自愿通过微信赞赏支持本站。</p>
+      </div>
+      <figure class="reward-card">
+        <a href="assets/wechat-reward-filetiny.jpg" target="_blank" rel="noopener">
+          <img src="assets/wechat-reward-filetiny.jpg" alt="FileTiny 微信赞赏码">
+        </a>
+        <figcaption>微信赞赏码 · 点击放大</figcaption>
+      </figure>
+    </section>
   </main>
 
   <footer>
@@ -398,8 +452,9 @@
 
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="vendor/pdfjs-core.js"></script>
-  <script src="app.js?v=20260626-tools1"></script>
+  <script src="app.js?v=20260626-tools2"></script>
   <script src="ads.js"></script>
 </body>
 </html>

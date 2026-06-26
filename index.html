@@ -10,7 +10,7 @@
   <link rel="alternate" hreflang="zh-CN" href="https://filetiny.com/zh">
   <link rel="alternate" hreflang="x-default" href="https://filetiny.com/">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8740205731170348" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="styles.css?v=20260626-ui1">
+  <link rel="stylesheet" href="styles.css?v=20260626-ui2">
 </head>
 <body>
   <header class="topbar">
@@ -19,6 +19,7 @@
       <nav>
         <a href="#image-tools">Image tools</a>
         <a href="#pdf-tools">PDF tools</a>
+        <a href="#qr-generator">QR Generator</a>
         <a href="#word-counter">Word Counter</a>
         <a href="#loan-calculator">Loan Calculator</a>
       </nav>
@@ -88,13 +89,17 @@
             <strong>PDF to Text</strong>
             <span>Extract selectable text from PDF files locally in your browser.</span>
           </a>
+          <a class="tool-card" href="#qr-generator">
+            <strong>QR Code Generator</strong>
+            <span>Create QR codes for links, text, email, phone numbers, and Wi-Fi notes.</span>
+          </a>
         </div>
       </div>
 
       <div class="tool-group">
         <div class="tool-group-head">
-          <p class="eyebrow">Text and calculator</p>
-          <h2>Quick checks for writing and simple finance</h2>
+          <p class="eyebrow">Everyday tools</p>
+          <h2>Quick writing checks and simple finance</h2>
         </div>
         <div class="tool-grid">
           <a class="tool-card" href="#word-counter">
@@ -338,6 +343,41 @@
       </div>
     </section>
 
+    <section id="qr-generator" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Everyday tool</p>
+          <h2>QR Code Generator</h2>
+          <p>Create a QR code from a link, text, email, phone number, or Wi-Fi note. Download it as PNG or SVG.</p>
+        </div>
+      </div>
+      <div class="panel qr-panel">
+        <label>QR code content
+          <textarea id="qrInput" rows="5" placeholder="https://example.com"></textarea>
+        </label>
+        <div class="controls">
+          <label>Size
+            <input id="qrSize" type="number" min="128" max="1024" step="32" value="256">
+          </label>
+          <label>Error correction
+            <select id="qrErrorLevel">
+              <option value="M">Medium</option>
+              <option value="L">Low</option>
+              <option value="Q">High</option>
+              <option value="H">Highest</option>
+            </select>
+          </label>
+          <button id="qrGenerateBtn" type="button">Generate QR code</button>
+          <button id="qrDownloadPngBtn" type="button" class="secondary" disabled>Download PNG</button>
+          <button id="qrDownloadSvgBtn" type="button" class="secondary" disabled>Download SVG</button>
+        </div>
+        <div class="qr-output">
+          <canvas id="qrCanvas" width="256" height="256" aria-label="Generated QR code"></canvas>
+          <div id="qrResult" class="result"></div>
+        </div>
+      </div>
+    </section>
+
     <section id="word-counter" class="tool-section">
       <div class="section-head">
         <div>
@@ -388,6 +428,20 @@
       <h2>Why these tools?</h2>
       <p>People search for practical tools when they have a task to finish: compressing files, converting images, combining photos into a PDF, extracting pages, counting words, or estimating a monthly payment. This site focuses on repeat-use utilities with simple pages that can grow into SEO landing pages.</p>
     </section>
+
+    <section class="support-block">
+      <div>
+        <p class="eyebrow">Support FileTiny</p>
+        <h2>Help keep these tools free.</h2>
+        <p>If FileTiny saved you time, you can support the site with a voluntary WeChat appreciation.</p>
+      </div>
+      <figure class="reward-card">
+        <a href="assets/wechat-reward-filetiny.jpg" target="_blank" rel="noopener">
+          <img src="assets/wechat-reward-filetiny.jpg" alt="WeChat appreciation code for FileTiny">
+        </a>
+        <figcaption>WeChat appreciation code · Click to enlarge</figcaption>
+      </figure>
+    </section>
   </main>
 
   <footer>
@@ -398,8 +452,9 @@
 
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="vendor/pdfjs-core.js"></script>
-  <script src="app.js?v=20260626-tools1"></script>
+  <script src="app.js?v=20260626-tools2"></script>
   <script src="ads.js"></script>
 </body>
 </html>

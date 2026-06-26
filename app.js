@@ -29,6 +29,10 @@ const copy = {
     pdfMerged: (count, pages) => `Merged ${count} PDFs into one file with ${pages} pages. `,
     pdfSplit: (pages) => `Created a new PDF with ${pages} pages. `,
     invalidPages: 'Enter valid page numbers, for example 1-3,5,8.',
+    qrEmpty: 'Enter text or a link first.',
+    qrLoadFail: 'QR code library failed to load. Check your connection and try again.',
+    qrDone: 'QR code generated. ',
+    qrDownloadReady: 'Use the download buttons to save it as PNG or SVG.',
     converting: (done, total) => `Converting ${done} of ${total} images...`,
     converted: (done, total) => `Converted ${done} of ${total} images.`,
     resizing: (done, total) => `Resizing ${done} of ${total} images...`,
@@ -73,6 +77,10 @@ const copy = {
     pdfMerged: (count, pages) => `已合并 ${count} 个 PDF，共 ${pages} 页。`,
     pdfSplit: (pages) => `已生成包含 ${pages} 页的新 PDF。`,
     invalidPages: '请输入有效页码，例如 1-3,5,8。',
+    qrEmpty: '请先输入文字或链接。',
+    qrLoadFail: '二维码组件加载失败，请检查网络后重试。',
+    qrDone: '二维码已生成。',
+    qrDownloadReady: '可以用下载按钮保存为 PNG 或 SVG。',
     converting: (done, total) => `正在转换 ${done}/${total} 张图片...`,
     converted: (done, total) => `已转换 ${done}/${total} 张图片。`,
     resizing: (done, total) => `正在处理 ${done}/${total} 张图片...`,
@@ -168,6 +176,7 @@ function renderFileResult(row, filename, beforeSize, afterSize, link) {
 const compressedImages = [];
 const convertedImages = [];
 const resizedImages = [];
+let latestQrSvg = '';
 
 async function compressImageFile(file, quality, maxWidth) {
   const image = await loadImage(file);
@@ -620,6 +629,82 @@ $('#downloadPdfTextBtn')?.addEventListener('click', () => {
   link.remove();
   URL.revokeObjectURL(link.href);
 });
+
+async function generateQrCode() {
+  const input = $('#qrInput');
+  const canvas = $('#qrCanvas');
+  const result = $('#qrResult');
+  const pngBtn = $('#qrDownloadPngBtn');
+  const svgBtn = $('#qrDownloadSvgBtn');
+  const text = input.value.trim();
+  const size = Math.min(1024, Math.max(128, Number($('#qrSize').value) || 256));
+  const errorCorrectionLevel = $('#qrErrorLevel').value || 'M';
+
+  pngBtn.disabled = true;
+  svgBtn.disabled = true;
+  latestQrSvg = '';
+
+  if (!text) {
+    result.textContent = copy.qrEmpty;
+    return;
+  }
+  if (!window.QRCode) {
+    result.textContent = copy.qrLoadFail;
+    return;
+  }
+
+  canvas.width = size;
+  canvas.height = size;
+  const options = {
+    width: size,
+    margin: 2,
+    errorCorrectionLevel,
+    color: {
+      dark: '#111827',
+      light: '#ffffff'
+    }
+  };
+
+  try {
+    await window.QRCode.toCanvas(canvas, text, options);
+    latestQrSvg = await window.QRCode.toString(text, {
+      ...options,
+      type: 'svg'
+    });
+    pngBtn.disabled = false;
+    svgBtn.disabled = false;
+    result.textContent = `${copy.qrDone} ${copy.qrDownloadReady}`;
+  } catch (error) {
+    result.textContent = error.message;
+  }
+}
+
+$('#qrGenerateBtn')?.addEventListener('click', generateQrCode);
+
+$('#qrDownloadPngBtn')?.addEventListener('click', () => {
+  const canvas = $('#qrCanvas');
+  const link = document.createElement('a');
+  link.href = canvas.toDataURL('image/png');
+  link.download = 'filetiny-qr-code.png';
+  document.body.append(link);
+  link.click();
+  link.remove();
+});
+
+$('#qrDownloadSvgBtn')?.addEventListener('click', () => {
+  if (!latestQrSvg) return;
+  const blob = new Blob([latestQrSvg], { type: 'image/svg+xml;charset=utf-8' });
+  const { link } = downloadBlob(blob, 'filetiny-qr-code.svg');
+  document.body.append(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(link.href);
+});
+
+if ($('#qrInput')) {
+  $('#qrInput').value = lang === 'zh' ? 'https://filetiny.com/zh' : 'https://filetiny.com/';
+  generateQrCode();
+}
 
 function updateWordStats() {
   const text = $('#wordInput').value;
