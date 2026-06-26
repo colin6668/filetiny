@@ -327,6 +327,21 @@ h2 {
   padding: 24px 26px 26px;
 }
 
+.split-tools {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+
+.split-tools > div {
+  display: grid;
+  gap: 14px;
+}
+
+h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
 .file-drop {
   display: grid;
   place-items: center;
@@ -544,6 +559,10 @@ footer {
   }
 
   .two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .split-tools {
     grid-template-columns: 1fr;
   }
 }

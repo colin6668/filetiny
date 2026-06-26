@@ -18,7 +18,11 @@
     <div class="topbar-actions">
       <nav>
         <a href="#image-compressor">Image Compressor</a>
+        <a href="#image-converter">Image Converter</a>
+        <a href="#image-resizer">Resize Image</a>
         <a href="#image-to-pdf">Image to PDF</a>
+        <a href="#pdf-compressor">PDF Compressor</a>
+        <a href="#pdf-merge-split">Merge / Split PDF</a>
         <a href="#pdf-to-text">PDF to Text</a>
         <a href="#word-counter">Word Counter</a>
         <a href="#loan-calculator">Loan Calculator</a>
@@ -53,6 +57,22 @@
       <a class="tool-card" href="#image-to-pdf">
         <strong>Image to PDF</strong>
         <span>Combine screenshots, receipts, or document photos into one PDF.</span>
+      </a>
+      <a class="tool-card" href="#pdf-compressor">
+        <strong>PDF Compressor</strong>
+        <span>Reduce large PDF files by rebuilding pages as optimized images.</span>
+      </a>
+      <a class="tool-card" href="#pdf-merge-split">
+        <strong>Merge / Split PDF</strong>
+        <span>Combine multiple PDFs or export selected pages into a new PDF.</span>
+      </a>
+      <a class="tool-card" href="#image-converter">
+        <strong>Image Converter</strong>
+        <span>Convert JPG, PNG, WebP, and other browser-supported images.</span>
+      </a>
+      <a class="tool-card" href="#image-resizer">
+        <strong>Resize and Crop</strong>
+        <span>Resize images to exact dimensions or crop them to a fixed ratio.</span>
       </a>
       <a class="tool-card" href="#pdf-to-text">
         <strong>PDF to Text</strong>
@@ -97,6 +117,81 @@
       </div>
     </section>
 
+    <section id="image-converter" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Image tool</p>
+          <h2>Image Converter</h2>
+          <p>Convert browser-supported images to JPG, PNG, or WebP. Files are processed locally on your device.</p>
+        </div>
+      </div>
+      <div class="panel">
+        <label class="file-drop">
+          <input id="convertInput" type="file" accept="image/*" multiple>
+          <span>Choose images to convert</span>
+        </label>
+        <div class="controls">
+          <label>Output format
+            <select id="convertFormat">
+              <option value="image/jpeg">JPG</option>
+              <option value="image/png">PNG</option>
+              <option value="image/webp">WebP</option>
+            </select>
+          </label>
+          <label>Quality
+            <input id="convertQuality" type="number" min="10" max="100" value="88">
+          </label>
+          <button id="convertBtn" type="button">Convert images</button>
+        </div>
+        <div id="convertResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="image-resizer" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Image tool</p>
+          <h2>Resize and Crop Image</h2>
+          <p>Resize images to exact width and height, or crop from the center to fit a fixed output size.</p>
+        </div>
+        <aside class="ad-unit ad-unit-inline" data-ad-name="image-resizer-inline" aria-label="Advertisement">
+          <div class="ad-fallback"><span>Advertisement</span></div>
+        </aside>
+      </div>
+      <div class="panel">
+        <label class="file-drop">
+          <input id="resizeInput" type="file" accept="image/*" multiple>
+          <span>Choose images to resize or crop</span>
+        </label>
+        <div class="controls">
+          <label>Width
+            <input id="resizeWidth" type="number" min="1" value="1200">
+          </label>
+          <label>Height
+            <input id="resizeHeight" type="number" min="1" value="800">
+          </label>
+          <label>Mode
+            <select id="resizeMode">
+              <option value="resize">Stretch to size</option>
+              <option value="crop">Center crop</option>
+            </select>
+          </label>
+          <label>Output format
+            <select id="resizeFormat">
+              <option value="image/jpeg">JPG</option>
+              <option value="image/png">PNG</option>
+              <option value="image/webp">WebP</option>
+            </select>
+          </label>
+          <label>Quality
+            <input id="resizeQuality" type="number" min="10" max="100" value="88">
+          </label>
+          <button id="resizeBtn" type="button">Resize images</button>
+        </div>
+        <div id="resizeResult" class="result"></div>
+      </div>
+    </section>
+
     <section id="image-to-pdf" class="tool-section">
       <div class="section-head">
         <div>
@@ -120,6 +215,72 @@
           <button id="pdfBtn" type="button">Create PDF</button>
         </div>
         <div id="pdfResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="pdf-compressor" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">PDF tool</p>
+          <h2>PDF Compressor</h2>
+          <p>Reduce PDF size by rendering pages as compressed images. This is best for scanned PDFs and may flatten selectable text.</p>
+        </div>
+        <aside class="ad-unit ad-unit-inline" data-ad-name="pdf-compressor-inline" aria-label="Advertisement">
+          <div class="ad-fallback"><span>Advertisement</span></div>
+        </aside>
+      </div>
+      <div class="panel">
+        <label class="file-drop">
+          <input id="pdfCompressInput" type="file" accept="application/pdf,.pdf">
+          <span>Choose a PDF to compress</span>
+        </label>
+        <div class="controls">
+          <label>JPEG quality
+            <input id="pdfCompressQuality" type="number" min="20" max="95" value="70">
+          </label>
+          <label>Max page width
+            <input id="pdfCompressWidth" type="number" min="600" max="2400" step="100" value="1200">
+          </label>
+          <button id="pdfCompressBtn" type="button">Compress PDF</button>
+        </div>
+        <div id="pdfCompressResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="pdf-merge-split" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">PDF tool</p>
+          <h2>Merge and Split PDF</h2>
+          <p>Merge several PDFs into one file, or export selected pages from a single PDF.</p>
+        </div>
+      </div>
+      <div class="panel split-tools">
+        <div>
+          <h3>Merge PDFs</h3>
+          <label class="file-drop">
+            <input id="pdfMergeInput" type="file" accept="application/pdf,.pdf" multiple>
+            <span>Choose PDFs to merge</span>
+          </label>
+          <div class="controls">
+            <button id="pdfMergeBtn" type="button">Merge PDFs</button>
+          </div>
+          <div id="pdfMergeResult" class="result"></div>
+        </div>
+        <div>
+          <h3>Split PDF</h3>
+          <label class="file-drop">
+            <input id="pdfSplitInput" type="file" accept="application/pdf,.pdf">
+            <span>Choose a PDF to split</span>
+          </label>
+          <div class="controls">
+            <label>Pages
+              <input id="pdfSplitPages" type="text" placeholder="1-3,5,8">
+            </label>
+            <button id="pdfSplitBtn" type="button">Export pages</button>
+          </div>
+          <div id="pdfSplitResult" class="result"></div>
+        </div>
       </div>
     </section>
 
@@ -197,7 +358,7 @@
 
     <section class="content-block">
       <h2>Why these tools?</h2>
-      <p>People search for practical tools when they have a task to finish: compressing an image for a form, combining photos into a PDF, counting words for an article, or estimating a monthly payment. This site focuses on repeat-use utilities with simple pages that can grow into SEO landing pages.</p>
+      <p>People search for practical tools when they have a task to finish: compressing files, converting images, combining photos into a PDF, extracting pages, counting words, or estimating a monthly payment. This site focuses on repeat-use utilities with simple pages that can grow into SEO landing pages.</p>
     </section>
   </main>
 
@@ -208,9 +369,9 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script src="vendor/pdfjs-core.js"></script>
   <script src="app.js"></script>
   <script src="ads.js"></script>
 </body>
 </html>
-

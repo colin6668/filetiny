@@ -18,7 +18,11 @@
     <div class="topbar-actions">
       <nav>
         <a href="#image-compressor">图片压缩</a>
+        <a href="#image-converter">图片格式转换</a>
+        <a href="#image-resizer">图片改尺寸</a>
         <a href="#image-to-pdf">图片转 PDF</a>
+        <a href="#pdf-compressor">PDF 压缩</a>
+        <a href="#pdf-merge-split">PDF 合并拆分</a>
         <a href="#pdf-to-text">PDF 提取文字</a>
         <a href="#word-counter">字数统计</a>
         <a href="#loan-calculator">贷款计算器</a>
@@ -53,6 +57,22 @@
       <a class="tool-card" href="#image-to-pdf">
         <strong>图片转 PDF</strong>
         <span>把截图、票据、资料照片、作业图片合并成一个 PDF 文件。</span>
+      </a>
+      <a class="tool-card" href="#pdf-compressor">
+        <strong>PDF 压缩</strong>
+        <span>把较大的 PDF 重建为压缩版本，适合扫描件和图片版 PDF。</span>
+      </a>
+      <a class="tool-card" href="#pdf-merge-split">
+        <strong>PDF 合并 / 拆分</strong>
+        <span>合并多个 PDF，或把指定页码导出成一个新的 PDF。</span>
+      </a>
+      <a class="tool-card" href="#image-converter">
+        <strong>图片格式转换</strong>
+        <span>把 JPG、PNG、WebP 等浏览器支持的图片转换成常用格式。</span>
+      </a>
+      <a class="tool-card" href="#image-resizer">
+        <strong>图片改尺寸 / 裁剪</strong>
+        <span>按固定宽高调整图片，或从中心裁剪成指定尺寸。</span>
       </a>
       <a class="tool-card" href="#pdf-to-text">
         <strong>PDF 提取文字</strong>
@@ -97,6 +117,81 @@
       </div>
     </section>
 
+    <section id="image-converter" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">图片工具</p>
+          <h2>图片格式转换</h2>
+          <p>把浏览器支持的图片转换成 JPG、PNG 或 WebP。文件直接在你的设备上处理。</p>
+        </div>
+      </div>
+      <div class="panel">
+        <label class="file-drop">
+          <input id="convertInput" type="file" accept="image/*" multiple>
+          <span>选择要转换的图片</span>
+        </label>
+        <div class="controls">
+          <label>输出格式
+            <select id="convertFormat">
+              <option value="image/jpeg">JPG</option>
+              <option value="image/png">PNG</option>
+              <option value="image/webp">WebP</option>
+            </select>
+          </label>
+          <label>质量
+            <input id="convertQuality" type="number" min="10" max="100" value="88">
+          </label>
+          <button id="convertBtn" type="button">转换图片</button>
+        </div>
+        <div id="convertResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="image-resizer" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">图片工具</p>
+          <h2>图片改尺寸和裁剪</h2>
+          <p>把图片调整到指定宽高，或从中心裁剪成固定尺寸。</p>
+        </div>
+        <aside class="ad-unit ad-unit-inline" data-ad-name="image-resizer-inline" aria-label="广告">
+          <div class="ad-fallback"><span>广告位</span></div>
+        </aside>
+      </div>
+      <div class="panel">
+        <label class="file-drop">
+          <input id="resizeInput" type="file" accept="image/*" multiple>
+          <span>选择要改尺寸或裁剪的图片</span>
+        </label>
+        <div class="controls">
+          <label>宽度
+            <input id="resizeWidth" type="number" min="1" value="1200">
+          </label>
+          <label>高度
+            <input id="resizeHeight" type="number" min="1" value="800">
+          </label>
+          <label>模式
+            <select id="resizeMode">
+              <option value="resize">拉伸到尺寸</option>
+              <option value="crop">中心裁剪</option>
+            </select>
+          </label>
+          <label>输出格式
+            <select id="resizeFormat">
+              <option value="image/jpeg">JPG</option>
+              <option value="image/png">PNG</option>
+              <option value="image/webp">WebP</option>
+            </select>
+          </label>
+          <label>质量
+            <input id="resizeQuality" type="number" min="10" max="100" value="88">
+          </label>
+          <button id="resizeBtn" type="button">处理图片</button>
+        </div>
+        <div id="resizeResult" class="result"></div>
+      </div>
+    </section>
+
     <section id="image-to-pdf" class="tool-section">
       <div class="section-head">
         <div>
@@ -120,6 +215,72 @@
           <button id="pdfBtn" type="button">生成 PDF</button>
         </div>
         <div id="pdfResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="pdf-compressor" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">PDF 工具</p>
+          <h2>PDF 压缩</h2>
+          <p>把 PDF 页面渲染为压缩图片后重新生成文件。适合扫描件和图片版 PDF；可选择文字可能会被扁平化。</p>
+        </div>
+        <aside class="ad-unit ad-unit-inline" data-ad-name="pdf-compressor-inline" aria-label="广告">
+          <div class="ad-fallback"><span>广告位</span></div>
+        </aside>
+      </div>
+      <div class="panel">
+        <label class="file-drop">
+          <input id="pdfCompressInput" type="file" accept="application/pdf,.pdf">
+          <span>选择要压缩的 PDF</span>
+        </label>
+        <div class="controls">
+          <label>JPEG 质量
+            <input id="pdfCompressQuality" type="number" min="20" max="95" value="70">
+          </label>
+          <label>最大页面宽度
+            <input id="pdfCompressWidth" type="number" min="600" max="2400" step="100" value="1200">
+          </label>
+          <button id="pdfCompressBtn" type="button">压缩 PDF</button>
+        </div>
+        <div id="pdfCompressResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="pdf-merge-split" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">PDF 工具</p>
+          <h2>PDF 合并和拆分</h2>
+          <p>把多个 PDF 合并成一个文件，或从单个 PDF 中导出指定页码。</p>
+        </div>
+      </div>
+      <div class="panel split-tools">
+        <div>
+          <h3>合并 PDF</h3>
+          <label class="file-drop">
+            <input id="pdfMergeInput" type="file" accept="application/pdf,.pdf" multiple>
+            <span>选择要合并的 PDF</span>
+          </label>
+          <div class="controls">
+            <button id="pdfMergeBtn" type="button">合并 PDF</button>
+          </div>
+          <div id="pdfMergeResult" class="result"></div>
+        </div>
+        <div>
+          <h3>拆分 PDF</h3>
+          <label class="file-drop">
+            <input id="pdfSplitInput" type="file" accept="application/pdf,.pdf">
+            <span>选择要拆分的 PDF</span>
+          </label>
+          <div class="controls">
+            <label>页码
+              <input id="pdfSplitPages" type="text" placeholder="1-3,5,8">
+            </label>
+            <button id="pdfSplitBtn" type="button">导出页码</button>
+          </div>
+          <div id="pdfSplitResult" class="result"></div>
+        </div>
       </div>
     </section>
 
@@ -197,7 +358,7 @@
 
     <section class="content-block">
       <h2>为什么做这些工具？</h2>
-      <p>很多人搜索小工具时，往往是马上要完成一个具体任务：上传图片太大、资料照片需要转成 PDF、文章需要统计字数、贷款月供需要快速估算。这个站点先从高频、轻量、可复用的工具做起，再逐步扩展更多长尾页面。</p>
+      <p>很多人搜索小工具时，往往是马上要完成一个具体任务：文件太大需要压缩、图片格式不对、资料照片需要转成 PDF、PDF 需要合并拆分、文章需要统计字数、贷款月供需要快速估算。这个站点先从高频、轻量、可复用的工具做起，再逐步扩展更多长尾页面。</p>
     </section>
   </main>
 
@@ -208,6 +369,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script src="vendor/pdfjs-core.js"></script>
   <script src="app.js"></script>
   <script src="ads.js"></script>
