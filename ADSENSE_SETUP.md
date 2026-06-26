@@ -1,4 +1,4 @@
-﻿# Google AdSense Setup
+# Google AdSense Setup
 
 This site is ready for AdSense, but real ads are disabled by default.
 
