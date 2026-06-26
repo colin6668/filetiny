@@ -1,0 +1,215 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daily Micro Tools - 免费图片压缩、PDF 提取文字、字数统计工具</title>
+  <meta name="description" content="免费的在线小工具：批量图片压缩、图片转 PDF、PDF 提取文字、字数统计和贷款月供计算。无需注册，多数处理在浏览器本地完成。">
+  <link rel="canonical" href="https://example.com/zh.html">
+  <link rel="alternate" hreflang="en" href="https://example.com/">
+  <link rel="alternate" hreflang="zh-CN" href="https://example.com/zh.html">
+  <link rel="alternate" hreflang="x-default" href="https://example.com/">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="zh.html">Daily Micro Tools</a>
+    <div class="topbar-actions">
+      <nav>
+        <a href="#image-compressor">图片压缩</a>
+        <a href="#image-to-pdf">图片转 PDF</a>
+        <a href="#pdf-to-text">PDF 提取文字</a>
+        <a href="#word-counter">字数统计</a>
+        <a href="#loan-calculator">贷款计算器</a>
+      </nav>
+      <div class="language-switch" aria-label="语言切换">
+        <a href="index.html" lang="en">English</a>
+        <a class="active" href="zh.html" lang="zh-CN">中文</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">免费在线小工具</p>
+        <h1>常用文件和文字处理工具，打开就能用。</h1>
+        <p class="lede">批量压缩图片、把照片合成 PDF、统计字数，或估算贷款月供。无需注册，多数处理直接在你的浏览器本地完成。</p>
+      </div>
+      <aside class="ad-unit ad-unit-rectangle" data-ad-name="hero-rectangle" aria-label="广告">
+        <div class="ad-fallback">
+          <span>广告位</span>
+          <small>响应式展示广告</small>
+        </div>
+      </aside>
+    </section>
+
+    <section class="tool-grid" aria-label="热门工具">
+      <a class="tool-card" href="#image-compressor">
+        <strong>图片压缩</strong>
+        <span>批量压缩 JPG、PNG、WebP，适合报名表、证件上传、邮件附件和网页配图。</span>
+      </a>
+      <a class="tool-card" href="#image-to-pdf">
+        <strong>图片转 PDF</strong>
+        <span>把截图、票据、资料照片、作业图片合并成一个 PDF 文件。</span>
+      </a>
+      <a class="tool-card" href="#pdf-to-text">
+        <strong>PDF 提取文字</strong>
+        <span>从 PDF 中提取可选择文字，适合整理资料、复制合同内容和做摘要。</span>
+      </a>
+      <a class="tool-card" href="#word-counter">
+        <strong>字数统计</strong>
+        <span>统计文章、论文、小红书文案、公众号内容的词数、字符数和阅读时间。</span>
+      </a>
+      <a class="tool-card" href="#loan-calculator">
+        <strong>贷款计算器</strong>
+        <span>快速估算固定利率贷款的月供、总还款和总利息。</span>
+      </a>
+    </section>
+
+    <section id="image-compressor" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">图片工具</p>
+          <h2>批量图片压缩</h2>
+          <p>选择一张或多张图片，设置压缩质量和最大宽度。压缩过程在浏览器本地完成，不需要上传到服务器。</p>
+        </div>
+        <aside class="ad-unit ad-unit-inline" data-ad-name="image-compressor-inline" aria-label="广告">
+          <div class="ad-fallback"><span>广告位</span></div>
+        </aside>
+      </div>
+      <div class="panel">
+        <label class="file-drop">
+          <input id="compressInput" type="file" accept="image/*" multiple>
+          <span>选择 JPG、PNG 或 WebP 图片</span>
+        </label>
+        <div class="controls">
+          <label>质量 <output id="qualityValue">75</output>%</label>
+          <input id="qualityRange" type="range" min="25" max="95" value="75">
+          <label>最大宽度
+            <input id="maxWidthInput" type="number" min="320" max="6000" step="10" value="1600">
+          </label>
+          <button id="compressBtn" type="button">压缩图片</button>
+          <button id="downloadAllBtn" type="button" class="secondary" disabled>全部下载</button>
+        </div>
+        <div id="compressResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="image-to-pdf" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">PDF 工具</p>
+          <h2>图片转 PDF</h2>
+          <p>选择多张图片并生成一个 PDF，适合整理发票、合同扫描件、资料提交和课堂作业。</p>
+        </div>
+      </div>
+      <div class="panel">
+        <label class="file-drop">
+          <input id="pdfInput" type="file" accept="image/*" multiple>
+          <span>选择要合并的图片</span>
+        </label>
+        <div class="controls">
+          <label>页面尺寸
+            <select id="pageSize">
+              <option value="a4">A4</option>
+              <option value="letter">Letter</option>
+            </select>
+          </label>
+          <button id="pdfBtn" type="button">生成 PDF</button>
+        </div>
+        <div id="pdfResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="pdf-to-text" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">PDF 工具</p>
+          <h2>PDF 提取文字</h2>
+          <p>上传 PDF 后在浏览器本地提取文字。适合可选择文字的电子 PDF；如果是纯扫描图片版 PDF，后续需要 OCR 功能。</p>
+        </div>
+        <aside class="ad-unit ad-unit-inline" data-ad-name="pdf-to-text-inline" aria-label="广告">
+          <div class="ad-fallback"><span>广告位</span></div>
+        </aside>
+      </div>
+      <div class="panel">
+        <label class="file-drop">
+          <input id="pdfTextInput" type="file" accept="application/pdf,.pdf">
+          <span>选择 PDF 文件</span>
+        </label>
+        <div class="controls">
+          <button id="extractPdfTextBtn" type="button">提取文字</button>
+          <button id="copyPdfTextBtn" type="button" class="secondary" disabled>复制文字</button>
+          <button id="downloadPdfTextBtn" type="button" class="secondary" disabled>下载 TXT</button>
+        </div>
+        <textarea id="pdfTextOutput" class="output-area" rows="12" placeholder="提取出的文字会显示在这里..."></textarea>
+        <div id="pdfTextResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="word-counter" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">文字工具</p>
+          <h2>字数统计</h2>
+          <p>粘贴文本后自动统计词数、字符数、句子数、段落数、预计阅读时间和高频词。</p>
+        </div>
+        <aside class="ad-unit ad-unit-inline" data-ad-name="word-counter-inline" aria-label="广告">
+          <div class="ad-fallback"><span>广告位</span></div>
+        </aside>
+      </div>
+      <div class="panel">
+        <textarea id="wordInput" rows="10" placeholder="在这里粘贴或输入文字..."></textarea>
+        <div class="stats" id="wordStats">
+          <span>词数: 0</span>
+          <span>字符数: 0</span>
+          <span>句子数: 0</span>
+          <span>阅读时间: 0 分钟</span>
+        </div>
+        <div id="keywordResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="loan-calculator" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">金融工具</p>
+          <h2>贷款月供计算器</h2>
+          <p>根据贷款金额、年利率和期限，估算固定利率贷款的月供、总还款和总利息。</p>
+        </div>
+      </div>
+      <div class="panel two-col">
+        <label>贷款金额
+          <input id="loanAmount" type="number" value="10000" min="1" step="100">
+        </label>
+        <label>年利率 (%)
+          <input id="loanRate" type="number" value="6.5" min="0" step="0.1">
+        </label>
+        <label>期限 (年)
+          <input id="loanYears" type="number" value="5" min="1" step="1">
+        </label>
+        <button id="loanBtn" type="button">计算</button>
+        <div id="loanResult" class="result wide"></div>
+      </div>
+    </section>
+
+    <section class="content-block">
+      <h2>为什么做这些工具？</h2>
+      <p>很多人搜索小工具时，往往是马上要完成一个具体任务：上传图片太大、资料照片需要转成 PDF、文章需要统计字数、贷款月供需要快速估算。这个站点先从高频、轻量、可复用的工具做起，再逐步扩展更多长尾页面。</p>
+    </section>
+  </main>
+
+  <footer>
+    <a href="zh-about.html">关于</a>
+    <a href="zh-privacy.html">隐私</a>
+    <span>Daily Micro Tools</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="vendor/pdfjs-core.js"></script>
+  <script src="app.js"></script>
+  <script src="ads.js"></script>
+</body>
+</html>
+

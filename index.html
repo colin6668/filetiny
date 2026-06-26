@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daily Micro Tools - Free Image, PDF, Text and Calculator Tools</title>
+  <meta name="description" content="Free browser-based tools for image compression, image to PDF conversion, PDF text extraction, word counting, and loan payment calculation. No signup. Files stay on your device.">
+  <link rel="canonical" href="https://example.com/">
+  <link rel="alternate" hreflang="en" href="https://example.com/">
+  <link rel="alternate" hreflang="zh-CN" href="https://example.com/zh.html">
+  <link rel="alternate" hreflang="x-default" href="https://example.com/">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Daily Micro Tools</a>
+    <div class="topbar-actions">
+      <nav>
+        <a href="#image-compressor">Image Compressor</a>
+        <a href="#image-to-pdf">Image to PDF</a>
+        <a href="#pdf-to-text">PDF to Text</a>
+        <a href="#word-counter">Word Counter</a>
+        <a href="#loan-calculator">Loan Calculator</a>
+      </nav>
+      <div class="language-switch" aria-label="Language switch">
+        <a class="active" href="index.html" lang="en">English</a>
+        <a href="zh.html" lang="zh-CN">中文</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Free online tools</p>
+        <h1>Fast daily tools that run in your browser.</h1>
+        <p class="lede">Compress images, turn photos into a PDF, count words, and estimate loan payments without creating an account. Most work happens locally on your device.</p>
+      </div>
+      <aside class="ad-unit ad-unit-rectangle" data-ad-name="hero-rectangle" aria-label="Advertisement">
+        <div class="ad-fallback">
+          <span>Advertisement</span>
+          <small>Responsive display ad</small>
+        </div>
+      </aside>
+    </section>
+
+    <section class="tool-grid" aria-label="Popular tools">
+      <a class="tool-card" href="#image-compressor">
+        <strong>Image Compressor</strong>
+        <span>Reduce JPG/PNG/WebP size for uploads, email, forms, and websites.</span>
+      </a>
+      <a class="tool-card" href="#image-to-pdf">
+        <strong>Image to PDF</strong>
+        <span>Combine screenshots, receipts, or document photos into one PDF.</span>
+      </a>
+      <a class="tool-card" href="#pdf-to-text">
+        <strong>PDF to Text</strong>
+        <span>Extract selectable text from PDF files locally in your browser.</span>
+      </a>
+      <a class="tool-card" href="#word-counter">
+        <strong>Word Counter</strong>
+        <span>Count words, characters, sentences, reading time, and keyword density.</span>
+      </a>
+      <a class="tool-card" href="#loan-calculator">
+        <strong>Loan Calculator</strong>
+        <span>Estimate monthly payments and total interest for simple loans.</span>
+      </a>
+    </section>
+
+    <section id="image-compressor" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Image tool</p>
+          <h2>Image Compressor</h2>
+          <p>Choose one or many images and adjust quality. Compressed files are generated locally in your browser.</p>
+        </div>
+        <aside class="ad-unit ad-unit-inline" data-ad-name="image-compressor-inline" aria-label="Advertisement">
+          <div class="ad-fallback"><span>Advertisement</span></div>
+        </aside>
+      </div>
+      <div class="panel">
+        <label class="file-drop">
+          <input id="compressInput" type="file" accept="image/*" multiple>
+          <span>Choose JPG, PNG, or WebP images</span>
+        </label>
+        <div class="controls">
+          <label>Quality <output id="qualityValue">75</output>%</label>
+          <input id="qualityRange" type="range" min="25" max="95" value="75">
+          <label>Max width
+            <input id="maxWidthInput" type="number" min="320" max="6000" step="10" value="1600">
+          </label>
+          <button id="compressBtn" type="button">Compress images</button>
+          <button id="downloadAllBtn" type="button" class="secondary" disabled>Download all</button>
+        </div>
+        <div id="compressResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="image-to-pdf" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">PDF tool</p>
+          <h2>Image to PDF</h2>
+          <p>Select one or more images and download a single PDF. Good for receipts, notes, applications, and document photos.</p>
+        </div>
+      </div>
+      <div class="panel">
+        <label class="file-drop">
+          <input id="pdfInput" type="file" accept="image/*" multiple>
+          <span>Choose images to combine</span>
+        </label>
+        <div class="controls">
+          <label>Page size
+            <select id="pageSize">
+              <option value="a4">A4</option>
+              <option value="letter">Letter</option>
+            </select>
+          </label>
+          <button id="pdfBtn" type="button">Create PDF</button>
+        </div>
+        <div id="pdfResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="pdf-to-text" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">PDF tool</p>
+          <h2>PDF to Text</h2>
+          <p>Upload a PDF and extract selectable text in your browser. This works best for digital PDFs; scanned image-only PDFs may need OCR.</p>
+        </div>
+        <aside class="ad-unit ad-unit-inline" data-ad-name="pdf-to-text-inline" aria-label="Advertisement">
+          <div class="ad-fallback"><span>Advertisement</span></div>
+        </aside>
+      </div>
+      <div class="panel">
+        <label class="file-drop">
+          <input id="pdfTextInput" type="file" accept="application/pdf,.pdf">
+          <span>Choose a PDF file</span>
+        </label>
+        <div class="controls">
+          <button id="extractPdfTextBtn" type="button">Extract text</button>
+          <button id="copyPdfTextBtn" type="button" class="secondary" disabled>Copy text</button>
+          <button id="downloadPdfTextBtn" type="button" class="secondary" disabled>Download TXT</button>
+        </div>
+        <textarea id="pdfTextOutput" class="output-area" rows="12" placeholder="Extracted text will appear here..."></textarea>
+        <div id="pdfTextResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="word-counter" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Text tool</p>
+          <h2>Word Counter</h2>
+          <p>Paste text to count words, characters, sentences, paragraphs, estimated reading time, and repeated keywords.</p>
+        </div>
+        <aside class="ad-unit ad-unit-inline" data-ad-name="word-counter-inline" aria-label="Advertisement">
+          <div class="ad-fallback"><span>Advertisement</span></div>
+        </aside>
+      </div>
+      <div class="panel">
+        <textarea id="wordInput" rows="10" placeholder="Paste or type your text here..."></textarea>
+        <div class="stats" id="wordStats">
+          <span>Words: 0</span>
+          <span>Characters: 0</span>
+          <span>Sentences: 0</span>
+          <span>Reading time: 0 min</span>
+        </div>
+        <div id="keywordResult" class="result"></div>
+      </div>
+    </section>
+
+    <section id="loan-calculator" class="tool-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Finance tool</p>
+          <h2>Loan Payment Calculator</h2>
+          <p>Estimate monthly payment and total interest for a fixed-rate loan.</p>
+        </div>
+      </div>
+      <div class="panel two-col">
+        <label>Loan amount
+          <input id="loanAmount" type="number" value="10000" min="1" step="100">
+        </label>
+        <label>Annual interest rate (%)
+          <input id="loanRate" type="number" value="6.5" min="0" step="0.1">
+        </label>
+        <label>Term (years)
+          <input id="loanYears" type="number" value="5" min="1" step="1">
+        </label>
+        <button id="loanBtn" type="button">Calculate</button>
+        <div id="loanResult" class="result wide"></div>
+      </div>
+    </section>
+
+    <section class="content-block">
+      <h2>Why these tools?</h2>
+      <p>People search for practical tools when they have a task to finish: compressing an image for a form, combining photos into a PDF, counting words for an article, or estimating a monthly payment. This site focuses on repeat-use utilities with simple pages that can grow into SEO landing pages.</p>
+    </section>
+  </main>
+
+  <footer>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy</a>
+    <span>Daily Micro Tools</span>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="vendor/pdfjs-core.js"></script>
+  <script src="app.js"></script>
+  <script src="ads.js"></script>
+</body>
+</html>
