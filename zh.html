@@ -17,13 +17,8 @@
     <a class="brand" href="/zh">FileTiny</a>
     <div class="topbar-actions">
       <nav>
-        <a href="#image-compressor">图片压缩</a>
-        <a href="#image-converter">图片格式转换</a>
-        <a href="#image-resizer">图片改尺寸</a>
-        <a href="#image-to-pdf">图片转 PDF</a>
-        <a href="#pdf-compressor">PDF 压缩</a>
-        <a href="#pdf-merge-split">PDF 合并拆分</a>
-        <a href="#pdf-to-text">PDF 提取文字</a>
+        <a href="#image-tools">图片工具</a>
+        <a href="#pdf-tools">PDF 工具</a>
         <a href="#word-counter">字数统计</a>
         <a href="#loan-calculator">贷款计算器</a>
       </nav>
@@ -37,55 +32,89 @@
   <main>
     <section class="hero">
       <div>
-        <p class="eyebrow">FileTiny 文件小工具</p>
-        <h1>轻量文件处理工具，打开就能用。</h1>
-        <p class="lede">批量压缩图片、把照片合成 PDF、统计字数，或估算贷款月供。无需注册，多数处理直接在你的浏览器本地完成。</p>
-      </div>
-      <aside class="ad-unit ad-unit-rectangle" data-ad-name="hero-rectangle" aria-label="广告">
-        <div class="ad-fallback">
-          <span>广告位</span>
-          <small>响应式展示广告</small>
+        <p class="eyebrow">FileTiny 工具台</p>
+        <h1>选择一个文件任务，直接在浏览器里完成。</h1>
+        <p class="lede">压缩、转换、改尺寸、合并、拆分和提取文件内容。无需注册，多数工具直接在你的设备本地运行。</p>
+        <div class="hero-actions" aria-label="常用任务">
+          <a href="#pdf-compressor">压缩 PDF</a>
+          <a href="#pdf-merge-split">合并 PDF</a>
+          <a href="#image-converter">转换图片</a>
+          <a href="#image-resizer">图片改尺寸</a>
         </div>
-      </aside>
+      </div>
     </section>
 
-    <section class="tool-grid" aria-label="热门工具">
-      <a class="tool-card" href="#image-compressor">
-        <strong>图片压缩</strong>
-        <span>批量压缩 JPG、PNG、WebP，适合报名表、证件上传、邮件附件和网页配图。</span>
-      </a>
-      <a class="tool-card" href="#image-to-pdf">
-        <strong>图片转 PDF</strong>
-        <span>把截图、票据、资料照片、作业图片合并成一个 PDF 文件。</span>
-      </a>
-      <a class="tool-card" href="#pdf-compressor">
-        <strong>PDF 压缩</strong>
-        <span>把较大的 PDF 重建为压缩版本，适合扫描件和图片版 PDF。</span>
-      </a>
-      <a class="tool-card" href="#pdf-merge-split">
-        <strong>PDF 合并 / 拆分</strong>
-        <span>合并多个 PDF，或把指定页码导出成一个新的 PDF。</span>
-      </a>
-      <a class="tool-card" href="#image-converter">
-        <strong>图片格式转换</strong>
-        <span>把 JPG、PNG、WebP 等浏览器支持的图片转换成常用格式。</span>
-      </a>
-      <a class="tool-card" href="#image-resizer">
-        <strong>图片改尺寸 / 裁剪</strong>
-        <span>按固定宽高调整图片，或从中心裁剪成指定尺寸。</span>
-      </a>
-      <a class="tool-card" href="#pdf-to-text">
-        <strong>PDF 提取文字</strong>
-        <span>从 PDF 中提取可选择文字，适合整理资料、复制合同内容和做摘要。</span>
-      </a>
-      <a class="tool-card" href="#word-counter">
-        <strong>字数统计</strong>
-        <span>统计文章、论文、小红书文案、公众号内容的词数、字符数和阅读时间。</span>
-      </a>
-      <a class="tool-card" href="#loan-calculator">
-        <strong>贷款计算器</strong>
-        <span>快速估算固定利率贷款的月供、总还款和总利息。</span>
-      </a>
+    <section class="tool-workbench" aria-label="选择工具">
+      <div id="image-tools" class="tool-group">
+        <div class="tool-group-head">
+          <p class="eyebrow">图片工具</p>
+          <h2>处理上传、邮件和文档里的图片</h2>
+        </div>
+        <div class="tool-grid">
+          <a class="tool-card" href="#image-compressor">
+            <strong>图片压缩</strong>
+            <span>批量压缩 JPG、PNG、WebP，适合报名表、邮件附件和网页配图。</span>
+          </a>
+          <a class="tool-card" href="#image-converter">
+            <strong>图片格式转换</strong>
+            <span>把 JPG、PNG、WebP 等浏览器支持的图片转换成常用格式。</span>
+          </a>
+          <a class="tool-card" href="#image-resizer">
+            <strong>图片改尺寸 / 裁剪</strong>
+            <span>按固定宽高调整图片，或从中心裁剪成指定尺寸。</span>
+          </a>
+          <a class="tool-card" href="#image-to-pdf">
+            <strong>图片转 PDF</strong>
+            <span>把截图、票据、资料照片、作业图片合并成一个 PDF 文件。</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="pdf-tools" class="tool-group">
+        <div class="tool-group-head">
+          <p class="eyebrow">PDF 工具</p>
+          <h2>压缩、合并、拆分和提取 PDF 内容</h2>
+        </div>
+        <div class="tool-grid">
+          <a class="tool-card" href="#pdf-compressor">
+            <strong>PDF 压缩</strong>
+            <span>把较大的 PDF 重建为压缩版本，适合扫描件和图片版 PDF。</span>
+          </a>
+          <a class="tool-card" href="#pdf-merge-split">
+            <strong>PDF 合并 / 拆分</strong>
+            <span>合并多个 PDF，或把指定页码导出成一个新的 PDF。</span>
+          </a>
+          <a class="tool-card" href="#pdf-to-text">
+            <strong>PDF 提取文字</strong>
+            <span>从 PDF 中提取可选择文字，适合整理资料、复制合同内容和做摘要。</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="tool-group">
+        <div class="tool-group-head">
+          <p class="eyebrow">文字和计算</p>
+          <h2>快速检查文字和简单财务数字</h2>
+        </div>
+        <div class="tool-grid">
+          <a class="tool-card" href="#word-counter">
+            <strong>字数统计</strong>
+            <span>统计文章、论文、小红书文案、公众号内容的词数、字符数和阅读时间。</span>
+          </a>
+          <a class="tool-card" href="#loan-calculator">
+            <strong>贷款计算器</strong>
+            <span>快速估算固定利率贷款的月供、总还款和总利息。</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <aside class="ad-unit ad-unit-strip" data-ad-name="top-strip" aria-label="广告">
+      <div class="ad-fallback">
+        <span>广告位</span>
+        <small>响应式展示广告</small>
+      </div>
+    </aside>
     </section>
 
     <section id="image-compressor" class="tool-section">

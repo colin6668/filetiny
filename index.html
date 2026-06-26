@@ -17,13 +17,8 @@
     <a class="brand" href="/">FileTiny</a>
     <div class="topbar-actions">
       <nav>
-        <a href="#image-compressor">Image Compressor</a>
-        <a href="#image-converter">Image Converter</a>
-        <a href="#image-resizer">Resize Image</a>
-        <a href="#image-to-pdf">Image to PDF</a>
-        <a href="#pdf-compressor">PDF Compressor</a>
-        <a href="#pdf-merge-split">Merge / Split PDF</a>
-        <a href="#pdf-to-text">PDF to Text</a>
+        <a href="#image-tools">Image tools</a>
+        <a href="#pdf-tools">PDF tools</a>
         <a href="#word-counter">Word Counter</a>
         <a href="#loan-calculator">Loan Calculator</a>
       </nav>
@@ -37,55 +32,89 @@
   <main>
     <section class="hero">
       <div>
-        <p class="eyebrow">FileTiny online tools</p>
-        <h1>Small file tools that run fast in your browser.</h1>
-        <p class="lede">Compress images, turn photos into a PDF, count words, and estimate loan payments without creating an account. Most work happens locally on your device.</p>
-      </div>
-      <aside class="ad-unit ad-unit-rectangle" data-ad-name="hero-rectangle" aria-label="Advertisement">
-        <div class="ad-fallback">
-          <span>Advertisement</span>
-          <small>Responsive display ad</small>
+        <p class="eyebrow">FileTiny tool desk</p>
+        <h1>Choose a file task and finish it in your browser.</h1>
+        <p class="lede">Compress, convert, resize, merge, split, and extract files without creating an account. Most tools run locally on your device.</p>
+        <div class="hero-actions" aria-label="Common tasks">
+          <a href="#pdf-compressor">Compress PDF</a>
+          <a href="#pdf-merge-split">Merge PDF</a>
+          <a href="#image-converter">Convert image</a>
+          <a href="#image-resizer">Resize image</a>
         </div>
-      </aside>
+      </div>
     </section>
 
-    <section class="tool-grid" aria-label="Popular tools">
-      <a class="tool-card" href="#image-compressor">
-        <strong>Image Compressor</strong>
-        <span>Reduce JPG/PNG/WebP size for uploads, email, forms, and websites.</span>
-      </a>
-      <a class="tool-card" href="#image-to-pdf">
-        <strong>Image to PDF</strong>
-        <span>Combine screenshots, receipts, or document photos into one PDF.</span>
-      </a>
-      <a class="tool-card" href="#pdf-compressor">
-        <strong>PDF Compressor</strong>
-        <span>Reduce large PDF files by rebuilding pages as optimized images.</span>
-      </a>
-      <a class="tool-card" href="#pdf-merge-split">
-        <strong>Merge / Split PDF</strong>
-        <span>Combine multiple PDFs or export selected pages into a new PDF.</span>
-      </a>
-      <a class="tool-card" href="#image-converter">
-        <strong>Image Converter</strong>
-        <span>Convert JPG, PNG, WebP, and other browser-supported images.</span>
-      </a>
-      <a class="tool-card" href="#image-resizer">
-        <strong>Resize and Crop</strong>
-        <span>Resize images to exact dimensions or crop them to a fixed ratio.</span>
-      </a>
-      <a class="tool-card" href="#pdf-to-text">
-        <strong>PDF to Text</strong>
-        <span>Extract selectable text from PDF files locally in your browser.</span>
-      </a>
-      <a class="tool-card" href="#word-counter">
-        <strong>Word Counter</strong>
-        <span>Count words, characters, sentences, reading time, and keyword density.</span>
-      </a>
-      <a class="tool-card" href="#loan-calculator">
-        <strong>Loan Calculator</strong>
-        <span>Estimate monthly payments and total interest for simple loans.</span>
-      </a>
+    <section class="tool-workbench" aria-label="Choose a tool">
+      <div id="image-tools" class="tool-group">
+        <div class="tool-group-head">
+          <p class="eyebrow">Image tools</p>
+          <h2>Prepare images for upload, email, or documents</h2>
+        </div>
+        <div class="tool-grid">
+          <a class="tool-card" href="#image-compressor">
+            <strong>Image Compressor</strong>
+            <span>Reduce JPG/PNG/WebP size for forms, email, and websites.</span>
+          </a>
+          <a class="tool-card" href="#image-converter">
+            <strong>Image Converter</strong>
+            <span>Convert JPG, PNG, WebP, and other browser-supported images.</span>
+          </a>
+          <a class="tool-card" href="#image-resizer">
+            <strong>Resize and Crop</strong>
+            <span>Resize images to exact dimensions or crop to a fixed ratio.</span>
+          </a>
+          <a class="tool-card" href="#image-to-pdf">
+            <strong>Image to PDF</strong>
+            <span>Combine screenshots, receipts, or document photos into one PDF.</span>
+          </a>
+        </div>
+      </div>
+
+      <div id="pdf-tools" class="tool-group">
+        <div class="tool-group-head">
+          <p class="eyebrow">PDF tools</p>
+          <h2>Compress, merge, split, and extract PDF content</h2>
+        </div>
+        <div class="tool-grid">
+          <a class="tool-card" href="#pdf-compressor">
+            <strong>PDF Compressor</strong>
+            <span>Reduce large PDF files by rebuilding pages as optimized images.</span>
+          </a>
+          <a class="tool-card" href="#pdf-merge-split">
+            <strong>Merge / Split PDF</strong>
+            <span>Combine multiple PDFs or export selected pages into a new PDF.</span>
+          </a>
+          <a class="tool-card" href="#pdf-to-text">
+            <strong>PDF to Text</strong>
+            <span>Extract selectable text from PDF files locally in your browser.</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="tool-group">
+        <div class="tool-group-head">
+          <p class="eyebrow">Text and calculator</p>
+          <h2>Quick checks for writing and simple finance</h2>
+        </div>
+        <div class="tool-grid">
+          <a class="tool-card" href="#word-counter">
+            <strong>Word Counter</strong>
+            <span>Count words, characters, sentences, reading time, and keyword density.</span>
+          </a>
+          <a class="tool-card" href="#loan-calculator">
+            <strong>Loan Calculator</strong>
+            <span>Estimate monthly payments and total interest for simple loans.</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <aside class="ad-unit ad-unit-strip" data-ad-name="top-strip" aria-label="Advertisement">
+      <div class="ad-fallback">
+        <span>Advertisement</span>
+        <small>Responsive display ad</small>
+      </div>
+    </aside>
     </section>
 
     <section id="image-compressor" class="tool-section">
