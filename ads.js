@@ -1,4 +1,4 @@
-const ADSENSE_CLIENT = '';
+const ADSENSE_CLIENT = 'ca-pub-8740205731170348';
 
 const AD_SLOTS = {
   'hero-rectangle': '',
