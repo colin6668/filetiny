@@ -182,7 +182,8 @@ const cropperState = {
   imageUrl: '',
   naturalWidth: 0,
   naturalHeight: 0,
-  dragging: null
+  dragging: null,
+  zoom: 1
 };
 let latestQrSvg = '';
 
@@ -320,6 +321,8 @@ function destroyCropperPreview() {
   cropperState.naturalWidth = 0;
   cropperState.naturalHeight = 0;
   cropperState.dragging = null;
+  cropperState.zoom = 1;
+  updateCropZoomPreview(null);
   const panel = $('#cropperPanel');
   if (panel) panel.hidden = true;
 }
@@ -343,6 +346,7 @@ function updateCropperMeta() {
   if (!cropData) return;
   if (selectionSize) selectionSize.textContent = `${Math.round(cropData.width)} x ${Math.round(cropData.height)}`;
   if (position) position.textContent = `${Math.round(cropData.x)}, ${Math.round(cropData.y)}`;
+  updateCropZoomPreview(cropData);
 }
 
 function showManualCropMessage(message) {
@@ -428,6 +432,61 @@ function getManualCropData() {
     width: Math.max(1, Math.round(width)),
     height: Math.max(1, Math.round(height))
   };
+}
+
+function updateCropZoomPreview(cropData = getManualCropData()) {
+  const canvas = $('#cropZoomCanvas');
+  const image = $('#cropperImage');
+  const zoomValue = $('#cropZoomValue');
+  const wrap = $('.zoom-canvas-wrap');
+  if (!canvas || !image) return;
+  if (zoomValue) zoomValue.textContent = `${cropperState.zoom.toFixed(1)}x`;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#eef3f8';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  if (!cropData || !image.naturalWidth || !image.naturalHeight) return;
+
+  const zoom = Math.max(1, Math.min(3, Number(cropperState.zoom) || 1));
+  const sourceWidth = Math.max(1, cropData.width / zoom);
+  const sourceHeight = Math.max(1, cropData.height / zoom);
+  const sourceRatio = sourceWidth / sourceHeight;
+  const baseWidth = 760;
+  const baseHeight = Math.max(220, Math.min(900, Math.round(baseWidth / sourceRatio)));
+  if (canvas.width !== baseWidth || canvas.height !== baseHeight) {
+    canvas.width = baseWidth;
+    canvas.height = baseHeight;
+  }
+  if (wrap) wrap.style.aspectRatio = `${sourceWidth} / ${sourceHeight}`;
+  const centerX = cropData.x + cropData.width / 2;
+  const centerY = cropData.y + cropData.height / 2;
+  const sx = Math.max(0, Math.min(image.naturalWidth - sourceWidth, centerX - sourceWidth / 2));
+  const sy = Math.max(0, Math.min(image.naturalHeight - sourceHeight, centerY - sourceHeight / 2));
+
+  ctx.imageSmoothingEnabled = true;
+  ctx.drawImage(
+    image,
+    sx,
+    sy,
+    sourceWidth,
+    sourceHeight,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+}
+
+function setupCropZoomWheel() {
+  const wrap = $('.zoom-canvas-wrap');
+  if (!wrap) return;
+  wrap.addEventListener('wheel', (event) => {
+    event.preventDefault();
+    const direction = event.deltaY > 0 ? -1 : 1;
+    const nextZoom = cropperState.zoom + direction * 0.15;
+    cropperState.zoom = Math.max(1, Math.min(3, Math.round(nextZoom * 10) / 10));
+    updateCropZoomPreview();
+  }, { passive: false });
 }
 
 function moveCropBox(left, top, width, height) {
@@ -618,6 +677,7 @@ $('#cropAspectRatio')?.addEventListener('change', syncCropperRatio);
 $('#resizeWidth')?.addEventListener('input', updateCropperMeta);
 $('#resizeHeight')?.addEventListener('input', updateCropperMeta);
 setupCropBoxDrag();
+setupCropZoomWheel();
 
 $('#pdfBtn')?.addEventListener('click', async () => {
   const files = Array.from($('#pdfInput').files || []);

@@ -10,7 +10,7 @@
   <link rel="alternate" hreflang="zh-CN" href="https://filetiny.com/zh">
   <link rel="alternate" hreflang="x-default" href="https://filetiny.com/">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8740205731170348" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="styles.css?v=20260626-ui3">
+  <link rel="stylesheet" href="styles.css?v=20260627-ui9">
 </head>
 <body>
   <header class="topbar">
@@ -232,17 +232,29 @@
           <button id="resizeBtn" type="button">Resize images</button>
         </div>
         <div id="cropperPanel" class="cropper-panel" hidden>
+          <div class="cropper-meta" aria-live="polite">
+            <span>Image <strong id="cropImageSize">0 x 0</strong> px</span>
+            <span>Crop <strong id="cropSelectionSize">0 x 0</strong> px</span>
+            <span>Position <strong id="cropPosition">0, 0</strong></span>
+            <span>Output <strong id="cropOutputSize">1200 x 800</strong> px</span>
+          </div>
           <div class="cropper-stage">
             <img id="cropperImage" alt="Image crop preview">
             <div id="cropBox" class="crop-box" role="presentation">
               <span class="crop-handle"></span>
             </div>
           </div>
-          <div class="cropper-meta" aria-live="polite">
-            <span>Image <strong id="cropImageSize">0 x 0</strong> px</span>
-            <span>Crop <strong id="cropSelectionSize">0 x 0</strong> px</span>
-            <span>Position <strong id="cropPosition">0, 0</strong></span>
-            <span>Output <strong id="cropOutputSize">1200 x 800</strong> px</span>
+          <div class="zoom-preview">
+            <div class="zoom-preview-head">
+              <div>
+                <strong>Zoom preview</strong>
+                <small>Scroll over the preview to zoom in or out</small>
+              </div>
+              <span class="zoom-level">Zoom <strong id="cropZoomValue">1.0x</strong></span>
+            </div>
+            <div class="zoom-canvas-wrap">
+              <canvas id="cropZoomCanvas" width="760" height="360" aria-label="Zoom preview of selected crop area"></canvas>
+            </div>
           </div>
         </div>
         <div id="resizeResult" class="result"></div>
@@ -478,7 +490,7 @@
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="vendor/pdfjs-core.js"></script>
-  <script src="app.js?v=20260627-tools4"></script>
+  <script src="app.js?v=20260627-tools9"></script>
   <script src="ads.js"></script>
 </body>
 </html>
