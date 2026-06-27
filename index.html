@@ -10,7 +10,7 @@
   <link rel="alternate" hreflang="zh-CN" href="https://filetiny.com/zh">
   <link rel="alternate" hreflang="x-default" href="https://filetiny.com/">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8740205731170348" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="styles.css?v=20260626-ui2">
+  <link rel="stylesheet" href="styles.css?v=20260626-ui3">
 </head>
 <body>
   <header class="topbar">
@@ -25,7 +25,7 @@
       </nav>
       <div class="language-switch" aria-label="Language switch">
         <a class="active" href="/" lang="en">English</a>
-        <a href="/zh" lang="zh-CN">中文</a>
+        <a href="zh.html" lang="zh-CN">中文</a>
       </div>
     </div>
   </header>
@@ -185,7 +185,7 @@
         <div>
           <p class="eyebrow">Image tool</p>
           <h2>Resize and Crop Image</h2>
-          <p>Resize images to exact width and height, or crop from the center to fit a fixed output size.</p>
+          <p>Resize images to exact width and height, or drag a crop box for precise avatar, cover, and document crops.</p>
         </div>
         <aside class="ad-unit ad-unit-inline" data-ad-name="image-resizer-inline" aria-label="Advertisement">
           <div class="ad-fallback"><span>Advertisement</span></div>
@@ -206,7 +206,17 @@
           <label>Mode
             <select id="resizeMode">
               <option value="resize">Stretch to size</option>
-              <option value="crop">Center crop</option>
+              <option value="crop">Manual crop</option>
+            </select>
+          </label>
+          <label>Crop ratio
+            <select id="cropAspectRatio">
+              <option value="free">Free</option>
+              <option value="1">1:1</option>
+              <option value="1.3333333333">4:3</option>
+              <option value="1.7777777778">16:9</option>
+              <option value="0.75">3:4</option>
+              <option value="0.5625">9:16</option>
             </select>
           </label>
           <label>Output format
@@ -220,6 +230,20 @@
             <input id="resizeQuality" type="number" min="10" max="100" value="88">
           </label>
           <button id="resizeBtn" type="button">Resize images</button>
+        </div>
+        <div id="cropperPanel" class="cropper-panel" hidden>
+          <div class="cropper-stage">
+            <img id="cropperImage" alt="Image crop preview">
+            <div id="cropBox" class="crop-box" role="presentation">
+              <span class="crop-handle"></span>
+            </div>
+          </div>
+          <div class="cropper-meta" aria-live="polite">
+            <span>Image <strong id="cropImageSize">0 x 0</strong> px</span>
+            <span>Crop <strong id="cropSelectionSize">0 x 0</strong> px</span>
+            <span>Position <strong id="cropPosition">0, 0</strong></span>
+            <span>Output <strong id="cropOutputSize">1200 x 800</strong> px</span>
+          </div>
         </div>
         <div id="resizeResult" class="result"></div>
       </div>
@@ -454,7 +478,7 @@
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="vendor/pdfjs-core.js"></script>
-  <script src="app.js?v=20260626-tools2"></script>
+  <script src="app.js?v=20260626-tools3"></script>
   <script src="ads.js"></script>
 </body>
 </html>

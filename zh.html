@@ -10,11 +10,11 @@
   <link rel="alternate" hreflang="zh-CN" href="https://filetiny.com/zh">
   <link rel="alternate" hreflang="x-default" href="https://filetiny.com/">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8740205731170348" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="styles.css?v=20260626-ui2">
+  <link rel="stylesheet" href="styles.css?v=20260626-ui3">
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="/zh">FileTiny</a>
+    <a class="brand" href="zh.html">FileTiny</a>
     <div class="topbar-actions">
       <nav>
         <a href="#image-tools">图片工具</a>
@@ -25,7 +25,7 @@
       </nav>
       <div class="language-switch" aria-label="语言切换">
         <a href="/" lang="en">English</a>
-        <a class="active" href="/zh" lang="zh-CN">中文</a>
+        <a class="active" href="zh.html" lang="zh-CN">中文</a>
       </div>
     </div>
   </header>
@@ -206,7 +206,17 @@
           <label>模式
             <select id="resizeMode">
               <option value="resize">拉伸到尺寸</option>
-              <option value="crop">中心裁剪</option>
+              <option value="crop">Manual crop</option>
+            </select>
+          </label>
+          <label>Crop ratio
+            <select id="cropAspectRatio">
+              <option value="free">Free</option>
+              <option value="1">1:1</option>
+              <option value="1.3333333333">4:3</option>
+              <option value="1.7777777778">16:9</option>
+              <option value="0.75">3:4</option>
+              <option value="0.5625">9:16</option>
             </select>
           </label>
           <label>输出格式
@@ -220,6 +230,20 @@
             <input id="resizeQuality" type="number" min="10" max="100" value="88">
           </label>
           <button id="resizeBtn" type="button">处理图片</button>
+        </div>
+        <div id="cropperPanel" class="cropper-panel" hidden>
+          <div class="cropper-stage">
+            <img id="cropperImage" alt="Image crop preview">
+            <div id="cropBox" class="crop-box" role="presentation">
+              <span class="crop-handle"></span>
+            </div>
+          </div>
+          <div class="cropper-meta" aria-live="polite">
+            <span>Image <strong id="cropImageSize">0 x 0</strong> px</span>
+            <span>Crop <strong id="cropSelectionSize">0 x 0</strong> px</span>
+            <span>Position <strong id="cropPosition">0, 0</strong></span>
+            <span>Output <strong id="cropOutputSize">1200 x 800</strong> px</span>
+          </div>
         </div>
         <div id="resizeResult" class="result"></div>
       </div>
@@ -454,7 +478,7 @@
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="vendor/pdfjs-core.js"></script>
-  <script src="app.js?v=20260626-tools2"></script>
+  <script src="app.js?v=20260626-tools3"></script>
   <script src="ads.js"></script>
 </body>
 </html>

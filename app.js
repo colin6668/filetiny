@@ -33,6 +33,7 @@ const copy = {
     qrLoadFail: 'QR code library failed to load. Check your connection and try again.',
     qrDone: 'QR code generated. ',
     qrDownloadReady: 'Use the download buttons to save it as PNG or SVG.',
+    cropSingleOnly: 'Manual crop preview is available for one image at a time. Multiple images will use center crop.',
     converting: (done, total) => `Converting ${done} of ${total} images...`,
     converted: (done, total) => `Converted ${done} of ${total} images.`,
     resizing: (done, total) => `Resizing ${done} of ${total} images...`,
@@ -176,6 +177,13 @@ function renderFileResult(row, filename, beforeSize, afterSize, link) {
 const compressedImages = [];
 const convertedImages = [];
 const resizedImages = [];
+const cropperState = {
+  file: null,
+  imageUrl: '',
+  naturalWidth: 0,
+  naturalHeight: 0,
+  dragging: null
+};
 let latestQrSvg = '';
 
 async function compressImageFile(file, quality, maxWidth) {
@@ -303,6 +311,217 @@ $('#convertBtn')?.addEventListener('click', async () => {
   }
 });
 
+function destroyCropperPreview() {
+  if (cropperState.imageUrl) {
+    URL.revokeObjectURL(cropperState.imageUrl);
+    cropperState.imageUrl = '';
+  }
+  cropperState.file = null;
+  cropperState.naturalWidth = 0;
+  cropperState.naturalHeight = 0;
+  cropperState.dragging = null;
+  const panel = $('#cropperPanel');
+  if (panel) panel.hidden = true;
+}
+
+function cropAspectRatio() {
+  const value = $('#cropAspectRatio')?.value || 'free';
+  return value === 'free' ? NaN : Number(value);
+}
+
+function updateCropperMeta() {
+  const imageSize = $('#cropImageSize');
+  const selectionSize = $('#cropSelectionSize');
+  const position = $('#cropPosition');
+  const outputSize = $('#cropOutputSize');
+  const targetWidth = Math.max(1, Number($('#resizeWidth')?.value) || 0);
+  const targetHeight = Math.max(1, Number($('#resizeHeight')?.value) || 0);
+  const cropData = getManualCropData();
+
+  if (outputSize) outputSize.textContent = `${targetWidth} x ${targetHeight}`;
+  if (imageSize) imageSize.textContent = `${Math.round(cropperState.naturalWidth)} x ${Math.round(cropperState.naturalHeight)}`;
+  if (!cropData) return;
+  if (selectionSize) selectionSize.textContent = `${Math.round(cropData.width)} x ${Math.round(cropData.height)}`;
+  if (position) position.textContent = `${Math.round(cropData.x)}, ${Math.round(cropData.y)}`;
+}
+
+function showManualCropMessage(message) {
+  const result = $('#resizeResult');
+  if (result) result.textContent = message;
+}
+
+function syncCropperRatio() {
+  fitCropBoxToRatio();
+  updateCropperMeta();
+}
+
+function imageBoundsInStage() {
+  const stage = $('.cropper-stage');
+  const image = $('#cropperImage');
+  if (!stage || !image || !image.naturalWidth) return null;
+  const stageRect = stage.getBoundingClientRect();
+  const imageRect = image.getBoundingClientRect();
+  return {
+    left: imageRect.left - stageRect.left,
+    top: imageRect.top - stageRect.top,
+    width: imageRect.width,
+    height: imageRect.height
+  };
+}
+
+function placeCropBox() {
+  const box = $('#cropBox');
+  const bounds = imageBoundsInStage();
+  if (!box || !bounds) return;
+  const ratio = cropAspectRatio();
+  let width = bounds.width * 0.68;
+  let height = bounds.height * 0.68;
+  if (Number.isFinite(ratio)) {
+    if (width / height > ratio) width = height * ratio;
+    else height = width / ratio;
+  }
+  box.style.left = `${bounds.left + (bounds.width - width) / 2}px`;
+  box.style.top = `${bounds.top + (bounds.height - height) / 2}px`;
+  box.style.width = `${width}px`;
+  box.style.height = `${height}px`;
+  box.hidden = false;
+  updateCropperMeta();
+}
+
+function fitCropBoxToRatio() {
+  const box = $('#cropBox');
+  const bounds = imageBoundsInStage();
+  if (!box || !bounds || box.hidden) return;
+  const ratio = cropAspectRatio();
+  if (!Number.isFinite(ratio)) return;
+  const current = box.getBoundingClientRect();
+  const stageRect = $('.cropper-stage').getBoundingClientRect();
+  let width = current.width;
+  let height = width / ratio;
+  if (height > bounds.height) {
+    height = bounds.height;
+    width = height * ratio;
+  }
+  const left = Math.min(Math.max(current.left - stageRect.left, bounds.left), bounds.left + bounds.width - width);
+  const top = Math.min(Math.max(current.top - stageRect.top, bounds.top), bounds.top + bounds.height - height);
+  box.style.left = `${left}px`;
+  box.style.top = `${top}px`;
+  box.style.width = `${width}px`;
+  box.style.height = `${height}px`;
+}
+
+function getManualCropData() {
+  const box = $('#cropBox');
+  const bounds = imageBoundsInStage();
+  if (!box || !bounds || box.hidden || !cropperState.naturalWidth || !cropperState.naturalHeight) return null;
+  const stageRect = $('.cropper-stage').getBoundingClientRect();
+  const boxRect = box.getBoundingClientRect();
+  const left = boxRect.left - stageRect.left;
+  const top = boxRect.top - stageRect.top;
+  const x = Math.max(0, (left - bounds.left) / bounds.width) * cropperState.naturalWidth;
+  const y = Math.max(0, (top - bounds.top) / bounds.height) * cropperState.naturalHeight;
+  const width = Math.min(bounds.width - (left - bounds.left), boxRect.width) / bounds.width * cropperState.naturalWidth;
+  const height = Math.min(bounds.height - (top - bounds.top), boxRect.height) / bounds.height * cropperState.naturalHeight;
+  return {
+    x: Math.max(0, Math.round(x)),
+    y: Math.max(0, Math.round(y)),
+    width: Math.max(1, Math.round(width)),
+    height: Math.max(1, Math.round(height))
+  };
+}
+
+function moveCropBox(left, top, width, height) {
+  const box = $('#cropBox');
+  const bounds = imageBoundsInStage();
+  if (!box || !bounds) return;
+  const minSize = 32;
+  const nextWidth = Math.max(minSize, Math.min(width, bounds.width));
+  const nextHeight = Math.max(minSize, Math.min(height, bounds.height));
+  const nextLeft = Math.min(Math.max(left, bounds.left), bounds.left + bounds.width - nextWidth);
+  const nextTop = Math.min(Math.max(top, bounds.top), bounds.top + bounds.height - nextHeight);
+  box.style.left = `${nextLeft}px`;
+  box.style.top = `${nextTop}px`;
+  box.style.width = `${nextWidth}px`;
+  box.style.height = `${nextHeight}px`;
+  updateCropperMeta();
+}
+
+function setupCropBoxDrag() {
+  const box = $('#cropBox');
+  const handle = $('.crop-handle');
+  if (!box || !handle) return;
+
+  const startDrag = (event, mode) => {
+    if (box.hidden) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const rect = box.getBoundingClientRect();
+    const stageRect = $('.cropper-stage').getBoundingClientRect();
+    cropperState.dragging = {
+      mode,
+      startX: event.clientX,
+      startY: event.clientY,
+      left: rect.left - stageRect.left,
+      top: rect.top - stageRect.top,
+      width: rect.width,
+      height: rect.height
+    };
+    box.setPointerCapture?.(event.pointerId);
+  };
+
+  box.addEventListener('pointerdown', (event) => {
+    if (event.target === handle) return;
+    startDrag(event, 'move');
+  });
+  handle.addEventListener('pointerdown', (event) => startDrag(event, 'resize'));
+
+  window.addEventListener('pointermove', (event) => {
+    const drag = cropperState.dragging;
+    if (!drag) return;
+    const dx = event.clientX - drag.startX;
+    const dy = event.clientY - drag.startY;
+    if (drag.mode === 'move') {
+      moveCropBox(drag.left + dx, drag.top + dy, drag.width, drag.height);
+      return;
+    }
+    const ratio = cropAspectRatio();
+    let width = drag.width + dx;
+    let height = drag.height + dy;
+    if (Number.isFinite(ratio)) height = width / ratio;
+    moveCropBox(drag.left, drag.top, width, height);
+  });
+
+  window.addEventListener('pointerup', () => {
+    cropperState.dragging = null;
+  });
+}
+
+function updateCropperPreview() {
+  const mode = $('#resizeMode')?.value;
+  const files = Array.from($('#resizeInput')?.files || []);
+  const panel = $('#cropperPanel');
+  const image = $('#cropperImage');
+
+  destroyCropperPreview();
+  updateCropperMeta();
+  if (!panel || !image || mode !== 'crop' || !files.length) return;
+
+  if (files.length > 1) {
+    showManualCropMessage(copy.cropSingleOnly || '\u624b\u52a8\u88c1\u526a\u9884\u89c8\u4e00\u6b21\u9002\u5408\u5904\u7406\u4e00\u5f20\u56fe\u7247\uff0c\u591a\u5f20\u56fe\u7247\u5c06\u4f7f\u7528\u4e2d\u5fc3\u88c1\u526a\u3002');
+    return;
+  }
+
+  cropperState.file = files[0];
+  cropperState.imageUrl = URL.createObjectURL(files[0]);
+  image.onload = () => {
+    cropperState.naturalWidth = image.naturalWidth;
+    cropperState.naturalHeight = image.naturalHeight;
+    placeCropBox();
+  };
+  image.src = cropperState.imageUrl;
+  panel.hidden = false;
+}
+
 async function resizeImageFile(file, options) {
   const image = await loadImage(file);
   const source = getImageSize(image);
@@ -314,7 +533,13 @@ async function resizeImageFile(file, options) {
   canvas.height = targetHeight;
   const ctx = canvas.getContext('2d');
 
-  if (crop) {
+  if (crop && options.cropData) {
+    const sx = Math.max(0, Math.min(source.width, Number(options.cropData.x) || 0));
+    const sy = Math.max(0, Math.min(source.height, Number(options.cropData.y) || 0));
+    const sw = Math.max(1, Math.min(source.width - sx, Number(options.cropData.width) || source.width));
+    const sh = Math.max(1, Math.min(source.height - sy, Number(options.cropData.height) || source.height));
+    ctx.drawImage(image, sx, sy, sw, sh, 0, 0, targetWidth, targetHeight);
+  } else if (crop) {
     const sourceRatio = source.width / source.height;
     const targetRatio = targetWidth / targetHeight;
     let sx = 0;
@@ -352,10 +577,14 @@ $('#resizeBtn')?.addEventListener('click', async () => {
   }
 
   for (const item of resizedImages.splice(0)) URL.revokeObjectURL(item.url);
+  const manualCropData = files.length === 1 && $('#resizeMode').value === 'crop'
+    ? getManualCropData()
+    : null;
   const options = {
     width: $('#resizeWidth').value,
     height: $('#resizeHeight').value,
-    mode: $('#resizeMode').value
+    mode: $('#resizeMode').value,
+    cropData: manualCropData
   };
   const status = document.createElement('div');
   const list = document.createElement('div');
@@ -378,6 +607,13 @@ $('#resizeBtn')?.addEventListener('click', async () => {
     status.textContent = copy.resized(i + 1, files.length);
   }
 });
+
+$('#resizeInput')?.addEventListener('change', updateCropperPreview);
+$('#resizeMode')?.addEventListener('change', updateCropperPreview);
+$('#cropAspectRatio')?.addEventListener('change', syncCropperRatio);
+$('#resizeWidth')?.addEventListener('input', updateCropperMeta);
+$('#resizeHeight')?.addEventListener('input', updateCropperMeta);
+setupCropBoxDrag();
 
 $('#pdfBtn')?.addEventListener('click', async () => {
   const files = Array.from($('#pdfInput').files || []);
