@@ -334,9 +334,9 @@ function updateCropperMeta() {
   const selectionSize = $('#cropSelectionSize');
   const position = $('#cropPosition');
   const outputSize = $('#cropOutputSize');
-  const targetWidth = Math.max(1, Number($('#resizeWidth')?.value) || 0);
-  const targetHeight = Math.max(1, Number($('#resizeHeight')?.value) || 0);
   const cropData = getManualCropData();
+  const targetWidth = cropData ? cropData.width : Math.max(1, Number($('#resizeWidth')?.value) || 0);
+  const targetHeight = cropData ? cropData.height : Math.max(1, Number($('#resizeHeight')?.value) || 0);
 
   if (outputSize) outputSize.textContent = `${targetWidth} x ${targetHeight}`;
   if (imageSize) imageSize.textContent = `${Math.round(cropperState.naturalWidth)} x ${Math.round(cropperState.naturalHeight)}`;
@@ -525,9 +525,13 @@ function updateCropperPreview() {
 async function resizeImageFile(file, options) {
   const image = await loadImage(file);
   const source = getImageSize(image);
-  const targetWidth = Math.max(1, Number(options.width) || source.width);
-  const targetHeight = Math.max(1, Number(options.height) || Math.round(source.height * (targetWidth / source.width)));
   const crop = options.mode === 'crop';
+  const targetWidth = crop && options.cropData
+    ? Math.max(1, Math.round(Number(options.cropData.width) || source.width))
+    : Math.max(1, Number(options.width) || source.width);
+  const targetHeight = crop && options.cropData
+    ? Math.max(1, Math.round(Number(options.cropData.height) || source.height))
+    : Math.max(1, Number(options.height) || Math.round(source.height * (targetWidth / source.width)));
   const canvas = document.createElement('canvas');
   canvas.width = targetWidth;
   canvas.height = targetHeight;
